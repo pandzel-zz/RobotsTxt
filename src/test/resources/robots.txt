@@ -1,0 +1,32 @@
+User-agent: *
+Disallow: /root/
+Allow: /root/data/
+
+User-agent: Baned
+Disallow: /
+
+User-agent: Superuser
+Allow: /
+
+User-agent: Wild
+Disallow: /wild*/
+Allow: /wildest/
+Disallow: /*.gif$
+
+User-agent: Goo1
+Disallow: /fish
+
+User-agent: Goo2
+Disallow: /fish*
+
+User-agent: Goo3
+Disallow: /fish/
+
+User-agent: Goo4
+Disallow: /*.php
+
+User-agent: Goo5
+Disallow: /*.php$
+
+User-agent: Goo6
+Disallow: /fish*.php
