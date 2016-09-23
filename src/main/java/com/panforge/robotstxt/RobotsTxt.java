@@ -17,18 +17,12 @@ package com.panforge.robotstxt;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 
 /**
  * Represents access policy from a single "robots.txt" file.
  * <p>
- * Use {@link RobotsTxt#read(java.net.URL)} to read and parse robots.txt.
+ * Use {@link RobotsTxt#read(java.io.InputStream)} to read and parse robots.txt.
  */
 public interface RobotsTxt {
 
@@ -60,16 +54,12 @@ public interface RobotsTxt {
   
   /**
    * Reads robots.txt available at the URL.
-   * @param url URL of the robots.txt
+   * @param input stream of content
    * @return parsed robots.txt object
-   * @throws URISyntaxException if invalid URL
-   * @throws IOException if file unaccessible.
+   * @throws IOException if unable to read content.
    */
-  static RobotsTxt read(URL url) throws URISyntaxException, IOException {
-    HttpGet get = new HttpGet(url.toURI());
-    try (CloseableHttpClient http = HttpClients.createDefault(); CloseableHttpResponse response = http.execute(get); InputStream input = response.getEntity().getContent()) {
+  static RobotsTxt read(InputStream input) throws IOException {
       RobotsTxtReader reader = new RobotsTxtReader();
       return reader.readRobotsTxt(input);
-    }
   }
 }
