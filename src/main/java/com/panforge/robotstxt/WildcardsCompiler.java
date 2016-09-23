@@ -15,7 +15,6 @@
  */
 package com.panforge.robotstxt;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**

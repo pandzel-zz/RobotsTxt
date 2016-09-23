@@ -77,7 +77,7 @@ class RobotsTxtReader {
 
         case "DISALLOW":
           if (currentGroup != null) {
-            boolean access = !entry.getValue().isEmpty()? false: true;
+            boolean access = entry.getValue().isEmpty();
             currentGroup.addAccess(new Access(entry.getValue(), access));
             startGroup = false;
           }
@@ -85,7 +85,7 @@ class RobotsTxtReader {
 
         case "ALLOW":
           if (currentGroup != null) {
-            boolean access = !entry.getValue().isEmpty()? true: false;
+            boolean access = !entry.getValue().isEmpty();
             currentGroup.addAccess(new Access(entry.getValue(), access));
             startGroup = false;
           }
