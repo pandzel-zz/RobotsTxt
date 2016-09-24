@@ -15,6 +15,8 @@
  */
 package com.panforge.robotstxt;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -113,34 +115,28 @@ class RobotsTxtImpl implements RobotsTxt {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-
-    if (defaultSection != null) {
-      sb.append(defaultSection);
-      sb.append("\n");
+    StringWriter sw = new StringWriter();
+    PrintWriter pw = new PrintWriter(sw);
+    
+    if (defaultSection!=null) {
+      pw.println(defaultSection);
     }
-
-    for (Group group : groups) {
-      sb.append(group);
-      sb.append("\n");
-    }
-
+    
+    groups.forEach(group->{ pw.println(group); /*w.println();*/ });
+    
     if (crawlDelay != null && crawlDelay > 0) {
-      sb.append(String.format("Crawl-delay: %d", crawlDelay));
-      sb.append("\n");
+      pw.format("Crawl-delay: %d", crawlDelay).println();
     }
-
+    
     if (host != null) {
-      sb.append(String.format("Host: %s", host));
-      sb.append("\n");
+      pw.format("Host: %s", host).println();
     }
-
-    for (String sitemap : sitemaps) {
-      sb.append(String.format("Sitemap: %s", sitemap));
-      sb.append("\n");
-    }
-
-    return sb.toString();
+    
+    sitemaps.forEach(sitemap->pw.format("Sitemap: %s", sitemap).println());
+    
+    pw.flush();
+    
+    return sw.toString();
   }
 
   /**
@@ -162,7 +158,7 @@ class RobotsTxtImpl implements RobotsTxt {
     String relativePath = assureRelative(path);
 
     if (relativePath != null && !"/robots.txt".equalsIgnoreCase(relativePath)) {
-      ArrayList<Access> selected = new ArrayList<Access>();
+      ArrayList<Access> selected = new ArrayList<>();
 
       if (!(userAgent == null || relativePath == null)) {
         Group sec = findSectionByAgent(groups, userAgent);
