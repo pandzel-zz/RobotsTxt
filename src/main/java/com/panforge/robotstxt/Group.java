@@ -15,6 +15,8 @@
  */
 package com.panforge.robotstxt;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -102,20 +104,19 @@ class Group {
   
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
+    StringWriter sw = new StringWriter();
+    PrintWriter pw = new PrintWriter(sw);
     
     if (anyAgent) {
-      sb.append(String.format("User-agent: %s", "*"));
-      sb.append("\n");
+      pw.format("User-agent: %s", "*").println();
     }
-
-    for (String userAgent: userAgents) {
-      sb.append(String.format("User-agent: %s", userAgent));
-      sb.append("\n");
-    }
-
-    sb.append(accessList);
     
-    return sb.toString();
+    userAgents.forEach(userAgent->pw.format("User-agent: %s", userAgent).println());
+    
+    pw.println(accessList);
+    
+    pw.flush();
+    
+    return sw.toString();
   }
 }
