@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.panforge</groupId>
     <artifactId>robots</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Robots.txt</name>
     <description>Java package used to parse and evaluate robot.txt</description>
