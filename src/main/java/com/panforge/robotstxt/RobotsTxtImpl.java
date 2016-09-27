@@ -164,13 +164,11 @@ class RobotsTxtImpl implements RobotsTxt {
     if (relativePath != null && !"/robots.txt".equalsIgnoreCase(relativePath)) {
       ArrayList<Access> selected = new ArrayList<Access>();
 
-      if (!(userAgent == null || relativePath == null)) {
-        Group sec = findSectionByAgent(groups, userAgent);
-        if (sec != null) {
-          selected.addAll(sec.select(userAgent, relativePath, matchingStrategy));
-        } else if (defaultSection != null) {
-          selected.addAll(defaultSection.select(userAgent, relativePath, matchingStrategy));
-        }
+      Group sec = findSectionByAgent(groups, userAgent);
+      if (sec != null) {
+        selected.addAll(sec.select(userAgent, relativePath, matchingStrategy));
+      } else if (defaultSection != null) {
+        selected.addAll(defaultSection.select(userAgent, relativePath, matchingStrategy));
       }
       return selected;
     } else {

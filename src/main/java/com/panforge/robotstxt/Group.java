@@ -77,13 +77,13 @@ class Group {
   
   /**
    * Select any access matching input path.
-   * @param userAgen user agent
+   * @param userAgent user agent
    * @param relativePath path to test
    * @param matchingStrategy matcher
    * @return list of matching elements
    */
   public List<Access> select(String userAgent, String relativaPath, MatchingStrategy matchingStrategy) {
-    if (userAgent==null || relativaPath==null || !matchUserAgent(userAgent)) {
+    if ((userAgent==null && !isAnyAgent()) || relativaPath==null || !matchUserAgent(userAgent)) {
       return Collections.EMPTY_LIST;
     }
     return accessList.select(relativaPath, matchingStrategy);
@@ -96,6 +96,7 @@ class Group {
    */
   public boolean matchUserAgent(String userAgent) {
     if (anyAgent) return true;
+    if (!anyAgent && userAgent==null) return false;
     return userAgents.stream().anyMatch(agent->agent.equalsIgnoreCase(userAgent));
   }
   
