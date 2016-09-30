@@ -32,7 +32,7 @@ public interface RobotsTxt {
    * @param path path to access
    * @return <code>true</code> if there is an access to the requested path
    */
-  boolean checkAccess(String userAgent, String path);
+  boolean query(String userAgent, String path);
 
   /**
    * Gets crawl delay.

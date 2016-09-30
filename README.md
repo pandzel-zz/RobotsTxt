@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/pandzel/RobotsTxt.png?branch=master)](https://travis-ci.org/pandzel/RobotsTxt)
 
 # RobotsTxt
-Java library to read and parse robots.txt file.
+Java library to read, parse and query robots.txt file.
 
 ## Instructions
 
@@ -49,13 +49,13 @@ try (InputStream robotsTxtStream = new URL("https://github.com/robots.txt").open
 * Check if robotsTxt allows for access to the resource:
 
 ```java
-boolean hasAccess = robotsTxt.checkAccess(<User-agent name>,<HTTP path to the resource>);
+boolean hasAccess = robotsTxt.query(<User-agent name>,<HTTP path to the resource>);
 ```
 
 for example:
 
 ```java
-boolean hasAccess = robotsTxt.checkAccess(null,"/humans.txt");
+boolean hasAccess = robotsTxt.query(null,"/humans.txt");
 ```
 
 ## Requirements

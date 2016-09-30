@@ -83,7 +83,7 @@ class RobotsTxtImpl implements RobotsTxt {
   }
 
   @Override
-  public boolean checkAccess(String userAgent, String path) {
+  public boolean query(String userAgent, String path) {
     List<Access> select = select(userAgent, path);
     Access winner = winningStrategy.selectWinner(select);
     return winner!=null? winner.hasAccess(): true;

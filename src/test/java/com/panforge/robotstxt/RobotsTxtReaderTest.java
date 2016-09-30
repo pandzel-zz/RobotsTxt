@@ -42,128 +42,128 @@ public class RobotsTxtReaderTest {
   public void testUnmatched() throws Exception {
     String user_agent = "Any";
     
-    assertTrue("/unmatched/foo.txt", bots.checkAccess(user_agent, "/unmatched/foo.txt"));
+    assertTrue("/unmatched/foo.txt", bots.query(user_agent, "/unmatched/foo.txt"));
   }
 
   @Test
   public void testAnyGroup() throws Exception {
     String user_agent = "Any";
     
-    assertTrue("/root", bots.checkAccess(user_agent, "/root"));
-    assertFalse("/root/re.txt", bots.checkAccess(user_agent, "/root/re.txt"));
-    assertFalse("/root/private/re.txt", bots.checkAccess(user_agent, "/root/private/re.txt"));
+    assertTrue("/root", bots.query(user_agent, "/root"));
+    assertFalse("/root/re.txt", bots.query(user_agent, "/root/re.txt"));
+    assertFalse("/root/private/re.txt", bots.query(user_agent, "/root/private/re.txt"));
     
-    assertTrue("/root/data/re.txt", bots.checkAccess(user_agent, "/root/data/re.txt"));
-    assertTrue("/root/data/public/re.txt", bots.checkAccess(user_agent, "/root/data/public/re.txt"));
+    assertTrue("/root/data/re.txt", bots.query(user_agent, "/root/data/re.txt"));
+    assertTrue("/root/data/public/re.txt", bots.query(user_agent, "/root/data/public/re.txt"));
   }
 
   @Test
   public void testBanedGroup() throws Exception {
     String user_agent = "Baned";
     
-    assertFalse("/root/data/re.txt", bots.checkAccess(user_agent, "/root/data/re.txt"));
+    assertFalse("/root/data/re.txt", bots.query(user_agent, "/root/data/re.txt"));
   }
 
   @Test
   public void testSuperUserGroup() throws Exception {
     String user_agent = "Superuser";
     
-    assertTrue("/root/re.txt", bots.checkAccess(user_agent, "/root/re.txt"));
+    assertTrue("/root/re.txt", bots.query(user_agent, "/root/re.txt"));
   }
 
   @Test
   public void testWildGroup() throws Exception {
     String user_agent = "Wild";
     
-    assertFalse("/wild/data.txt", bots.checkAccess(user_agent, "/wild/data.txt"));
-    assertFalse("/wilder/data.txt", bots.checkAccess(user_agent, "/wilder/data.txt"));
-    assertFalse("/my.gif", bots.checkAccess(user_agent, "/my.gif"));
-    assertFalse("/root/my.gif", bots.checkAccess(user_agent, "/root/my.gif"));
+    assertFalse("/wild/data.txt", bots.query(user_agent, "/wild/data.txt"));
+    assertFalse("/wilder/data.txt", bots.query(user_agent, "/wilder/data.txt"));
+    assertFalse("/my.gif", bots.query(user_agent, "/my.gif"));
+    assertFalse("/root/my.gif", bots.query(user_agent, "/root/my.gif"));
     
-    assertTrue("/wildest/data.txt", bots.checkAccess(user_agent, "/wildest/data.txt"));
-    assertTrue("/root/my.gif/pictures", bots.checkAccess(user_agent, "/root/my.gif/pictures"));
+    assertTrue("/wildest/data.txt", bots.query(user_agent, "/wildest/data.txt"));
+    assertTrue("/root/my.gif/pictures", bots.query(user_agent, "/root/my.gif/pictures"));
   }
 
   @Test
   public void testGoo1() throws Exception {
     String user_agent = "Goo1";
     
-    assertFalse("/fish", bots.checkAccess(user_agent, "/fish"));
-    assertFalse("/fish.html", bots.checkAccess(user_agent, "/fish.html"));
-    assertFalse("/fish/salmon.html", bots.checkAccess(user_agent, "/fish/salmon.html"));
-    assertFalse("/fishheads", bots.checkAccess(user_agent, "/fishheads"));
-    assertFalse("/fishheads/yummy.html", bots.checkAccess(user_agent, "/fishheads/yummy.html"));
-    assertFalse("/fish.php?id=anything", bots.checkAccess(user_agent, "/fish.php?id=anything"));
+    assertFalse("/fish", bots.query(user_agent, "/fish"));
+    assertFalse("/fish.html", bots.query(user_agent, "/fish.html"));
+    assertFalse("/fish/salmon.html", bots.query(user_agent, "/fish/salmon.html"));
+    assertFalse("/fishheads", bots.query(user_agent, "/fishheads"));
+    assertFalse("/fishheads/yummy.html", bots.query(user_agent, "/fishheads/yummy.html"));
+    assertFalse("/fish.php?id=anything", bots.query(user_agent, "/fish.php?id=anything"));
 
-    assertTrue("/Fish.asp", bots.checkAccess(user_agent, "/Fish.asp"));
-    assertTrue("/catfish", bots.checkAccess(user_agent, "/catfish"));
-    assertTrue("/?id=fish", bots.checkAccess(user_agent, "/?id=fish"));
+    assertTrue("/Fish.asp", bots.query(user_agent, "/Fish.asp"));
+    assertTrue("/catfish", bots.query(user_agent, "/catfish"));
+    assertTrue("/?id=fish", bots.query(user_agent, "/?id=fish"));
   }
 
   @Test
   public void testGoo2() throws Exception {
     String user_agent = "Goo2";
     
-    assertFalse("/fish", bots.checkAccess(user_agent, "/fish"));
-    assertFalse("/fish.html", bots.checkAccess(user_agent, "/fish.html"));
-    assertFalse("/fish/salmon.html", bots.checkAccess(user_agent, "/fish/salmon.html"));
-    assertFalse("/fishheads", bots.checkAccess(user_agent, "/fishheads"));
-    assertFalse("/fishheads/yummy.html", bots.checkAccess(user_agent, "/fishheads/yummy.html"));
-    assertFalse("/fish.php?id=anything", bots.checkAccess(user_agent, "/fish.php?id=anything"));
+    assertFalse("/fish", bots.query(user_agent, "/fish"));
+    assertFalse("/fish.html", bots.query(user_agent, "/fish.html"));
+    assertFalse("/fish/salmon.html", bots.query(user_agent, "/fish/salmon.html"));
+    assertFalse("/fishheads", bots.query(user_agent, "/fishheads"));
+    assertFalse("/fishheads/yummy.html", bots.query(user_agent, "/fishheads/yummy.html"));
+    assertFalse("/fish.php?id=anything", bots.query(user_agent, "/fish.php?id=anything"));
 
-    assertTrue("/Fish.asp", bots.checkAccess(user_agent, "/Fish.asp"));
-    assertTrue("/catfish", bots.checkAccess(user_agent, "/catfish"));
-    assertTrue("/?id=fish", bots.checkAccess(user_agent, "/?id=fish"));
+    assertTrue("/Fish.asp", bots.query(user_agent, "/Fish.asp"));
+    assertTrue("/catfish", bots.query(user_agent, "/catfish"));
+    assertTrue("/?id=fish", bots.query(user_agent, "/?id=fish"));
   }
 
   @Test
   public void testGoo3() throws Exception {
     String user_agent = "Goo3";
     
-    assertFalse("/fish/", bots.checkAccess(user_agent, "/fish/"));
-    assertFalse("/fish/?id=anything", bots.checkAccess(user_agent, "/fish/?id=anything"));
-    assertFalse("/fish/salmon.html", bots.checkAccess(user_agent, "/fish/salmon.html"));
+    assertFalse("/fish/", bots.query(user_agent, "/fish/"));
+    assertFalse("/fish/?id=anything", bots.query(user_agent, "/fish/?id=anything"));
+    assertFalse("/fish/salmon.html", bots.query(user_agent, "/fish/salmon.html"));
 
-    assertTrue("/fish", bots.checkAccess(user_agent, "/fish"));
-    assertTrue("/fish", bots.checkAccess(user_agent, "/fish.html"));
-    assertTrue("/?id=fish", bots.checkAccess(user_agent, "/?id=fish"));
+    assertTrue("/fish", bots.query(user_agent, "/fish"));
+    assertTrue("/fish", bots.query(user_agent, "/fish.html"));
+    assertTrue("/?id=fish", bots.query(user_agent, "/?id=fish"));
   }
 
   @Test
   public void testGoo4() throws Exception {
     String user_agent = "Goo4";
     
-    assertFalse("/filename.php", bots.checkAccess(user_agent, "/filename.php"));
-    assertFalse("/folder/filename.php", bots.checkAccess(user_agent, "/folder/filename.php"));
-    assertFalse("/folder/filename.php?parameter", bots.checkAccess(user_agent, "/folder/filename.php?parameter"));
-    assertFalse("/folder/any.php.file.html", bots.checkAccess(user_agent, "/folder/any.php.file.html"));
-    assertFalse("/folder/any.php.file.html/filename.php", bots.checkAccess(user_agent, "/folder/any.php.file.html/filename.php"));
+    assertFalse("/filename.php", bots.query(user_agent, "/filename.php"));
+    assertFalse("/folder/filename.php", bots.query(user_agent, "/folder/filename.php"));
+    assertFalse("/folder/filename.php?parameter", bots.query(user_agent, "/folder/filename.php?parameter"));
+    assertFalse("/folder/any.php.file.html", bots.query(user_agent, "/folder/any.php.file.html"));
+    assertFalse("/folder/any.php.file.html/filename.php", bots.query(user_agent, "/folder/any.php.file.html/filename.php"));
     
-    assertTrue("/windows.PHP", bots.checkAccess(user_agent, "/windows.PHP"));
+    assertTrue("/windows.PHP", bots.query(user_agent, "/windows.PHP"));
   }
 
   @Test
   public void testGoo5() throws Exception {
     String user_agent = "Goo5";
     
-    assertFalse("/filename.php", bots.checkAccess(user_agent, "/filename.php"));
-    assertFalse("/folder/filename.php", bots.checkAccess(user_agent, "/folder/filename.php"));
+    assertFalse("/filename.php", bots.query(user_agent, "/filename.php"));
+    assertFalse("/folder/filename.php", bots.query(user_agent, "/folder/filename.php"));
     
-    assertTrue("/filename.php?parameter", bots.checkAccess(user_agent, "/filename.php?parameter"));
-    assertTrue("/filename.php/", bots.checkAccess(user_agent, "/filename.php/"));
-    assertTrue("/folder/filename.php?parameter", bots.checkAccess(user_agent, "/folder/filename.php?parameter"));
-    assertTrue("/filename.php/", bots.checkAccess(user_agent, "/filename.php/"));
-    assertTrue("/filename.php5", bots.checkAccess(user_agent, "/filename.php5"));
-    assertTrue("/windows.PHP", bots.checkAccess(user_agent, "/windows.PHP"));
+    assertTrue("/filename.php?parameter", bots.query(user_agent, "/filename.php?parameter"));
+    assertTrue("/filename.php/", bots.query(user_agent, "/filename.php/"));
+    assertTrue("/folder/filename.php?parameter", bots.query(user_agent, "/folder/filename.php?parameter"));
+    assertTrue("/filename.php/", bots.query(user_agent, "/filename.php/"));
+    assertTrue("/filename.php5", bots.query(user_agent, "/filename.php5"));
+    assertTrue("/windows.PHP", bots.query(user_agent, "/windows.PHP"));
   }
 
   @Test
   public void testGoo6() throws Exception {
     String user_agent = "Goo6";
     
-    assertFalse("/fish.php", bots.checkAccess(user_agent, "/fish.php"));
-    assertFalse("/fishheads/catfish.php?parameters", bots.checkAccess(user_agent, "/fishheads/catfish.php?parameters"));
+    assertFalse("/fish.php", bots.query(user_agent, "/fish.php"));
+    assertFalse("/fishheads/catfish.php?parameters", bots.query(user_agent, "/fishheads/catfish.php?parameters"));
     
-    assertTrue("/Fish.PHP", bots.checkAccess(user_agent, "/Fish.PHP"));
+    assertTrue("/Fish.PHP", bots.query(user_agent, "/Fish.PHP"));
   }
 }
