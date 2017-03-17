@@ -16,6 +16,7 @@
 package com.panforge.robotstxt;
 
 import java.io.InputStream;
+import java.util.List;
 import org.junit.Test;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
@@ -165,5 +166,15 @@ public class RobotsTxtReaderTest {
     assertFalse("/fishheads/catfish.php?parameters", bots.query(user_agent, "/fishheads/catfish.php?parameters"));
     
     assertTrue("/Fish.PHP", bots.query(user_agent, "/Fish.PHP"));
+  }
+  
+  @Test
+  public void testGetDisallowList() throws Exception {
+    String user_agent = null;
+    
+    List<String> disallowList = bots.getDisallowList(user_agent);
+    
+    assertTrue("disallowList.size()==1",disallowList.size()==1);
+    assertTrue("disallowList contains /root/",disallowList.contains("/root/"));
   }
 }

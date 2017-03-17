@@ -65,4 +65,12 @@ class AccessList {
     
     return allMatching;
   }
+  
+  /**
+   * Lists all accesses.
+   * @return list of all accesses
+   */
+  public List<Access> listAll() {
+    return accessList;
+  }
 }

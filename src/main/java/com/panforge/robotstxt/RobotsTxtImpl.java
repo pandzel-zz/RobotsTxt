@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Robots TXT implementation.
@@ -83,12 +84,26 @@ class RobotsTxtImpl implements RobotsTxt {
   }
 
   @Override
+  public List<String> getDisallowList(String userAgent) {
+    Group sec = findSectionByAgent(groups, userAgent);
+    if (sec == null) {
+      sec = defaultSection;
+    }
+    return sec != null
+            ? sec.getAccessList().listAll().stream()
+                    .filter(acc -> !acc.hasAccess())
+                    .map(acc -> acc.getPath())
+                    .collect(Collectors.toList())
+            : Collections.emptyList();
+  }
+
+  @Override
   public boolean query(String userAgent, String path) {
     List<Access> select = select(userAgent, path);
     Access winner = winningStrategy.selectWinner(select);
-    return winner!=null? winner.hasAccess(): true;
+    return winner != null ? winner.hasAccess() : true;
   }
-  
+
   /**
    * Adds section.
    *
@@ -117,25 +132,27 @@ class RobotsTxtImpl implements RobotsTxt {
   public String toString() {
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
-    
-    if (defaultSection!=null) {
+
+    if (defaultSection != null) {
       pw.println(defaultSection);
     }
-    
-    groups.forEach(group->{ pw.println(group); /*w.println();*/ });
-    
+
+    groups.forEach(group -> {
+      pw.println(group);
+    });
+
     if (crawlDelay != null && crawlDelay > 0) {
       pw.format("Crawl-delay: %d", crawlDelay).println();
     }
-    
+
     if (host != null) {
       pw.format("Host: %s", host).println();
     }
-    
-    sitemaps.forEach(sitemap->pw.format("Sitemap: %s", sitemap).println());
-    
+
+    sitemaps.forEach(sitemap -> pw.format("Sitemap: %s", sitemap).println());
+
     pw.flush();
-    
+
     return sw.toString();
   }
 

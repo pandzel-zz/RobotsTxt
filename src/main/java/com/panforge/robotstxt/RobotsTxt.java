@@ -53,6 +53,13 @@ public interface RobotsTxt {
   List<String> getSitemaps();
   
   /**
+   * Gets a list of disallowed resources.
+   * @param userAgent user agent
+   * @return list of disallowed resources
+   */
+  List<String> getDisallowList(String userAgent);
+  
+  /**
    * Reads robots.txt available at the URL.
    * @param input stream of content
    * @return parsed robots.txt object
