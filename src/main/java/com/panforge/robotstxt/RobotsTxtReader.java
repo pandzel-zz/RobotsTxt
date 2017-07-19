@@ -80,7 +80,7 @@ class RobotsTxtReader {
         case "DISALLOW":
           if (currentGroup != null) {
             boolean access = entry.getValue().isEmpty();
-            currentGroup.addAccess(new Access(entry.getValue(), access));
+            currentGroup.addAccess(new Access(entry.getSource(), entry.getValue(), access));
             startGroup = false;
           }
           break;
@@ -88,7 +88,7 @@ class RobotsTxtReader {
         case "ALLOW":
           if (currentGroup != null) {
             boolean access = !entry.getValue().isEmpty();
-            currentGroup.addAccess(new Access(entry.getValue(), access));
+            currentGroup.addAccess(new Access(entry.getSource(), entry.getValue(), access));
             startGroup = false;
           }
           break;
@@ -176,7 +176,7 @@ class RobotsTxtReader {
 
     value = decode(value);
 
-    return new Entry(key, value);
+    return new Entry(line, key, value);
   }
 
   /**
@@ -184,10 +184,12 @@ class RobotsTxtReader {
    */
   private final static class Entry {
 
+    private final String source;
     private final String key;
     private final String value;
 
-    public Entry(String key, String value) {
+    public Entry(String source, String key, String value) {
+      this.source = source;
       this.key = key;
       this.value = value;
     }
@@ -200,9 +202,13 @@ class RobotsTxtReader {
       return value;
     }
 
+    public String getSource() {
+      return source;
+    }
+
     @Override
     public String toString() {
-      return String.format("%s: %s", key, value != null ? value : "");
+      return source;
     }
   }
 }
