@@ -28,6 +28,7 @@ class Group {
   private final List<String> userAgents = new ArrayList<>();
   private final AccessList accessList = new AccessList();
   private boolean anyAgent;
+  private Integer crawlDelay;
 
   /**
    * Checks if is any agent.
@@ -101,6 +102,23 @@ class Group {
     if (!anyAgent && userAgent==null) return false;
     return userAgents.stream().anyMatch(agent->agent.equalsIgnoreCase(userAgent));
   }
+
+  /**
+   * Sets crawl delay.
+   *
+   * @param crawlDelay crawl delay.
+   */
+  public void setCrawlDelay(Integer crawlDelay) {
+    this.crawlDelay = crawlDelay;
+  }
+
+  /**
+   * Gets crawl delay.
+   * @return crawl delay
+   */
+  public Integer getCrawlDelay() {
+    return crawlDelay;
+  }
   
   @Override
   public String toString() {
@@ -114,6 +132,10 @@ class Group {
     userAgents.forEach(userAgent->pw.format("User-agent: %s", userAgent).println());
     
     pw.println(accessList);
+    
+    if (crawlDelay!=null) {
+      pw.format("Crawl-delay: %d", crawlDelay).println();
+    }
     
     pw.flush();
     

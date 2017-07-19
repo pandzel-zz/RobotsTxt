@@ -73,7 +73,9 @@ class RobotsTxtImpl implements RobotsTxt {
    * Sets crawl delay.
    *
    * @param crawlDelay crawl delay.
+   * @deprecated 
    */
+  @Deprecated
   public void setCrawlDelay(Integer crawlDelay) {
     this.crawlDelay = crawlDelay;
   }
@@ -140,10 +142,6 @@ class RobotsTxtImpl implements RobotsTxt {
     groups.forEach(group -> {
       pw.println(group);
     });
-
-    if (crawlDelay != null && crawlDelay > 0) {
-      pw.format("Crawl-delay: %d", crawlDelay).println();
-    }
 
     if (host != null) {
       pw.format("Host: %s", host).println();

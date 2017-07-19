@@ -37,7 +37,9 @@ public interface RobotsTxt {
   /**
    * Gets crawl delay.
    * @return crawl delay in seconds or <code>0</code> if no delay declared
+   * @deprecated 
    */
+  @Deprecated
   Integer getCrawlDelay();
 
   /**

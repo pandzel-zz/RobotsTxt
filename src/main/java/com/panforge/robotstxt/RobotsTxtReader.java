@@ -34,13 +34,14 @@ class RobotsTxtReader {
    * Creates instance of the robots.txt reader with default strategies.
    */
   public RobotsTxtReader() {
-    this(MatchingStrategy.DEFAULT,WinningStrategy.DEFAULT);
+    this(MatchingStrategy.DEFAULT, WinningStrategy.DEFAULT);
   }
-  
+
   /**
    * Creates instance of the robots.txt reader.
+   *
    * @param matchingStrategy
-   * @param winningStrategy 
+   * @param winningStrategy
    */
   public RobotsTxtReader(MatchingStrategy matchingStrategy, WinningStrategy winningStrategy) {
     this.matchingStrategy = matchingStrategy;
@@ -49,6 +50,7 @@ class RobotsTxtReader {
 
   /**
    * Reads robots txt.
+   *
    * @param inputStream input stream with robots.txt content.
    * @return parsed robots.txt
    * @throws IOException if reading stream fails
@@ -95,33 +97,34 @@ class RobotsTxtReader {
           if (currentGroup != null) {
             try {
               int crawlDelay = Integer.parseInt(entry.getValue());
-              robots.setCrawlDelay(crawlDelay);
+              currentGroup.setCrawlDelay(crawlDelay);
+              startGroup = false;
             } catch (NumberFormatException ex) {
             }
-            startGroup = false;
+          } else {
           }
           break;
-          
+
         case "HOST":
           robots.setHost(entry.getValue());
           startGroup = false;
           break;
-          
+
         case "SITEMAP":
           robots.getSitemaps().add(entry.getValue());
           startGroup = false;
           break;
-          
+
         default:
           startGroup = false;
           break;
       }
     }
-      
+
     if (currentGroup != null) {
       robots.addGroup(currentGroup);
     }
-    
+
     return robots;
   }
 

@@ -73,6 +73,13 @@ public class RobotsTxtReaderTest {
   }
 
   @Test
+  public void testAllowedGroup() throws Exception {
+    String user_agent = "Allowed";
+    
+    assertTrue("/root/re.txt", bots.query(user_agent, "/root/re.txt"));
+  }
+
+  @Test
   public void testWildGroup() throws Exception {
     String user_agent = "Wild";
     
