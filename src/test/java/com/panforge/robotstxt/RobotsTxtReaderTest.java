@@ -59,8 +59,15 @@ public class RobotsTxtReaderTest {
   }
 
   @Test
-  public void testBanedGroup() throws Exception {
-    String user_agent = "Baned";
+  public void testBannedGroup() throws Exception {
+    String user_agent = "Banned";
+    
+    assertFalse("/root/data/re.txt", bots.query(user_agent, "/root/data/re.txt"));
+  }
+
+  @Test
+  public void testBanned2Group() throws Exception {
+    String user_agent = "Banned2";
     
     assertFalse("/root/data/re.txt", bots.query(user_agent, "/root/data/re.txt"));
   }

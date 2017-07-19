@@ -1,12 +1,15 @@
-User-agent: Allowed
-Disallow: 
-
 User-agent: *
 Disallow: /root/
 Allow: /root/data/
 
-User-agent: Baned
+User-agent: Banned
 Disallow: /
+
+User-agent: Banned2
+Allow:
+
+User-agent: Allowed
+Disallow: 
 
 User-agent: Superuser
 Allow: /
