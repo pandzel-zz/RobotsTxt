@@ -15,8 +15,6 @@
  */
 package com.panforge.robotstxt;
 
-import java.io.UnsupportedEncodingException;
-
 /**
  * URL decoder for robots.
  */
@@ -36,7 +34,7 @@ class URLDecoder {
         }
         sb.append(java.net.URLDecoder.decode(str,"UTF-8"));
         str = sb.toString();
-      } catch (UnsupportedEncodingException ex) {
+      } catch (Exception ex) {
       }
     }
     return str;
