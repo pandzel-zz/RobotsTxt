@@ -87,10 +87,7 @@ class RobotsTxtImpl implements RobotsTxt {
 
   @Override
   public List<String> getDisallowList(String userAgent) {
-    Group sec = findSectionByAgent(groups, userAgent);
-    if (sec == null) {
-      sec = defaultSection;
-    }
+    Group sec = findSectionByAgent(groups, userAgent, defaultSection);
     return sec != null
             ? sec.getAccessList().listAll().stream()
                     .filter(acc -> !acc.hasAccess())
@@ -101,7 +98,7 @@ class RobotsTxtImpl implements RobotsTxt {
 
   @Override
   public boolean query(String userAgent, String path) {
-    List<Access> select = select(userAgent, path);
+    List<Access> select = select(userAgent, path).stream().map(m -> m.access).collect(Collectors.toList());
     Access winner = winningStrategy.selectWinner(select);
     return winner != null ? winner.hasAccess() : true;
   }
@@ -169,17 +166,15 @@ class RobotsTxtImpl implements RobotsTxt {
     return null;
   }
 
-  private List<Access> select(String userAgent, String path) {
+  private List<Match> select(String userAgent, String path) {
     String relativePath = assureRelative(path);
 
     if (relativePath != null && !"/robots.txt".equalsIgnoreCase(relativePath)) {
-      ArrayList<Access> selected = new ArrayList<>();
+      ArrayList<Match> selected = new ArrayList<>();
 
-      Group sec = findSectionByAgent(groups, userAgent);
+      Group sec = findSectionByAgent(groups, userAgent, defaultSection);
       if (sec != null) {
         selected.addAll(sec.select(userAgent, relativePath, matchingStrategy));
-      } else if (defaultSection != null) {
-        selected.addAll(defaultSection.select(userAgent, relativePath, matchingStrategy));
       }
       return selected;
     } else {
@@ -187,13 +182,13 @@ class RobotsTxtImpl implements RobotsTxt {
     }
   }
 
-  private Group findSectionByAgent(List<Group> sections, String userAgent) {
+  private Group findSectionByAgent(List<Group> sections, String userAgent, Group defaultGroup) {
     for (Group sec : sections) {
       if (sec.matchUserAgent(userAgent)) {
         return sec;
       }
     }
-    return null;
+    return defaultGroup;
   }
 
   private String assureRelative(String path) {

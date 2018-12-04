@@ -20,6 +20,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Robots.txt group of directives.
@@ -85,11 +86,11 @@ class Group {
    * @param matchingStrategy matcher
    * @return list of matching elements
    */
-  public List<Access> select(String userAgent, String relativaPath, MatchingStrategy matchingStrategy) {
+  public List<Match> select(String userAgent, String relativaPath, MatchingStrategy matchingStrategy) {
     if ((userAgent==null && !isAnyAgent()) || relativaPath==null || !matchUserAgent(userAgent)) {
       return Collections.EMPTY_LIST;
     }
-    return accessList.select(relativaPath, matchingStrategy);
+    return accessList.select(relativaPath, matchingStrategy).stream().map(acc -> new Match(this, acc)).collect(Collectors.toList());
   }
   
   /**

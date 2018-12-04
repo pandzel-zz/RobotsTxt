@@ -19,11 +19,7 @@ package com.panforge.robotstxt;
  * Access.
  */
 class Access {
-  public static final Access ALLOW = new Access("Allow: /", "/", true, true);
-  public static final Access DISALLOW = new Access("Disallow: /", "/", false, true);
-  
   private final String source;
-  private final boolean constant;
   private final String accessPath;
   private final boolean accessAllowed;
 
@@ -34,19 +30,7 @@ class Access {
    * @param accessAllowed access to the path
    */
   public Access(String source, String accessPath, boolean accessAllowed) {
-    this(source, accessPath, accessAllowed, false);
-  }
-
-  /**
-   * Creates instance of the access.
-   * @param source source of the definition
-   * @param accessPath access path
-   * @param accessAllowed access to the path
-   * @param constant indicates if this is constant
-   */
-  Access(String source, String accessPath, boolean accessAllowed, boolean constant) {
     this.source = source;
-    this.constant = constant;
     this.accessPath = accessPath;
     this.accessAllowed = accessAllowed;
   }
