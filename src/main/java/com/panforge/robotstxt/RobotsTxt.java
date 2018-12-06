@@ -33,6 +33,14 @@ public interface RobotsTxt {
    * @return <code>true</code> if there is an access to the requested path
    */
   boolean query(String userAgent, String path);
+  
+  /**
+   * Asks for permit to access
+   * @param userAgent user agent to be used evaluate authorization
+   * @param path path to access
+   * @return permit
+   */
+  Grant ask(String userAgent, String path);
 
   /**
    * Gets crawl delay.

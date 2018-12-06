@@ -91,16 +91,21 @@ class RobotsTxtImpl implements RobotsTxt {
     return sec != null
             ? sec.getAccessList().listAll().stream()
                     .filter(acc -> !acc.hasAccess())
-                    .map(acc -> acc.getPath())
+                    .map(acc -> acc.getClause())
                     .collect(Collectors.toList())
             : Collections.emptyList();
   }
 
   @Override
   public boolean query(String userAgent, String path) {
-    List<Access> select = select(userAgent, path).stream().map(m -> m.access).collect(Collectors.toList());
-    Access winner = winningStrategy.selectWinner(select);
-    return winner != null ? winner.hasAccess() : true;
+    Grant permit = ask(userAgent, path);
+    return permit != null ? permit.hasAccess() : true;
+  }
+
+  @Override
+  public Grant ask(String userAgent, String path) {
+    List<Access> select = select(userAgent, path).stream().collect(Collectors.toList());
+    return winningStrategy.selectWinner(select);
   }
 
   /**
@@ -166,11 +171,11 @@ class RobotsTxtImpl implements RobotsTxt {
     return null;
   }
 
-  private List<Match> select(String userAgent, String path) {
+  private List<Access> select(String userAgent, String path) {
     String relativePath = assureRelative(path);
 
     if (relativePath != null && !"/robots.txt".equalsIgnoreCase(relativePath)) {
-      ArrayList<Match> selected = new ArrayList<>();
+      ArrayList<Access> selected = new ArrayList<>();
 
       Group sec = findSectionByAgent(groups, userAgent, defaultSection);
       if (sec != null) {

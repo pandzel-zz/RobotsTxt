@@ -18,37 +18,39 @@ package com.panforge.robotstxt;
 /**
  * Access.
  */
-class Access {
+class Access implements Grant {
+  private final Group group;
   private final String source;
-  private final String accessPath;
+  private final String clause;
   private final boolean accessAllowed;
 
   /**
    * Creates instance of the access.
+   * @param group group
    * @param source source of the information
-   * @param accessPath access path
+   * @param clause access path
    * @param accessAllowed access to the path
    */
-  public Access(String source, String accessPath, boolean accessAllowed) {
+  public Access(Group group, String source, String clause, boolean accessAllowed) {
+    this.group = group;
     this.source = source;
-    this.accessPath = accessPath;
+    this.clause = clause;
     this.accessAllowed = accessAllowed;
   }
 
-  /**
-   * Gets path.
-   * @return path
-   */
-  public String getPath() {
-    return accessPath;
+  @Override
+  public String getClause() {
+    return clause;
   }
   
-  /**
-   * Check if this section gives an access
-   * @return 
-   */
+  @Override
   public boolean hasAccess() {
     return accessAllowed;
+  }
+
+  @Override
+  public Integer getCrawlDelay() {
+    return group.getCrawlDelay();
   }
   
   /**
@@ -58,7 +60,7 @@ class Access {
    * @return <code>true</code> if path matches access path
    */
   public boolean matches(String path, MatchingStrategy matchingStrategy) {
-    return path!=null && matchingStrategy.matches(accessPath, path);
+    return path!=null && matchingStrategy.matches(clause, path);
   }
   
   @Override

@@ -33,10 +33,10 @@ interface WinningStrategy {
   Access selectWinner(List<Access> candidates);
   
   WinningStrategy DEFAULT  = (candidates)->{
-    Access winningDisallow = candidates.stream().filter(acc->acc.hasAccess()==false).sorted((l,r)->r.getPath().length()-l.getPath().length()).findFirst().orElse(null);
-    Access winningAllow = candidates.stream().filter(acc->acc.hasAccess()==true).sorted((l,r)->r.getPath().length()-l.getPath().length()).findFirst().orElse(null);
+    Access winningDisallow = candidates.stream().filter(acc->acc.hasAccess()==false).sorted((l,r)->r.getClause().length()-l.getClause().length()).findFirst().orElse(null);
+    Access winningAllow = candidates.stream().filter(acc->acc.hasAccess()==true).sorted((l,r)->r.getClause().length()-l.getClause().length()).findFirst().orElse(null);
 
-    if (winningAllow!=null && winningAllow.getPath().length()>=(winningDisallow!=null? winningDisallow.getPath().length(): 0)) {
+    if (winningAllow!=null && winningAllow.getClause().length()>=(winningDisallow!=null? winningDisallow.getClause().length(): 0)) {
       return winningAllow;
     }
 

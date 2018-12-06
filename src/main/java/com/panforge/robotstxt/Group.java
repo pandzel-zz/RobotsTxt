@@ -86,11 +86,11 @@ class Group {
    * @param matchingStrategy matcher
    * @return list of matching elements
    */
-  public List<Match> select(String userAgent, String relativaPath, MatchingStrategy matchingStrategy) {
+  public List<Access> select(String userAgent, String relativaPath, MatchingStrategy matchingStrategy) {
     if ((userAgent==null && !isAnyAgent()) || relativaPath==null || !matchUserAgent(userAgent)) {
       return Collections.EMPTY_LIST;
     }
-    return accessList.select(relativaPath, matchingStrategy).stream().map(acc -> new Match(this, acc)).collect(Collectors.toList());
+    return accessList.select(relativaPath, matchingStrategy).stream().collect(Collectors.toList());
   }
   
   /**
