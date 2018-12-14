@@ -201,7 +201,7 @@ class RobotsTxtImpl implements RobotsTxt {
       URI uri = new URI(path);
       if (uri.isAbsolute()) {
         URL url = uri.toURL();
-        path = String.format("/%s%s%s", url.getPath(), url.getQuery() != null ? "#" + url.getQuery() : "", url.getRef() != null ? "#" + url.getRef() : "").replaceAll("/+", "/");
+        path = String.format("/%s%s%s", url.getPath(), url.getQuery() != null ? "?" + url.getQuery() : "", url.getRef() != null ? "#" + url.getRef() : "").replaceAll("/+", "/");
       }
       return path;
     } catch (Exception ex) {
