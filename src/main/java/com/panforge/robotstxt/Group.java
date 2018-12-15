@@ -78,6 +78,14 @@ class Group {
   public void addAccess(Access access) {
     this.accessList.addAccess(access);
   }
+
+  /**
+   * Gets user agents.
+   * @return user agents
+   */
+  public List<String> getUserAgents() {
+    return userAgents;
+  }
   
   /**
    * Select any access matching input path.

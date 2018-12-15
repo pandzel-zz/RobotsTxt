@@ -15,15 +15,12 @@
  */
 package com.panforge.robotstxt;
 
+import java.util.List;
+
 /**
  * Grant.
  */
 public interface Grant {
-  /**
-   * Gets clause being engaged.
-   * @return clause
-   */
-  String getClause();
   
   /**
    * Checks if there is an access granted.
@@ -32,7 +29,19 @@ public interface Grant {
   boolean hasAccess();
   
   /**
-   * Gets crawl delay.
+   * Gets clause being engaged.
+   * @return clause
+   */
+  String getClause();
+  
+  /**
+   * Gets user agents from the group.
+   * @return user agents
+   */
+  List<String> getUserAgents();
+  
+  /**
+   * Gets crawl delay from the group.
    * @return crawl delay or <code>null</code> if no crawl delay defined
    */
   Integer getCrawlDelay();
