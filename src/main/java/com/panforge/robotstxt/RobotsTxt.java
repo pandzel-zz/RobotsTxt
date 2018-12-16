@@ -35,17 +35,17 @@ public interface RobotsTxt {
   boolean query(String userAgent, String path);
   
   /**
-   * Asks for permit to access
+   * Asks for grant.
    * @param userAgent user agent to be used evaluate authorization
    * @param path path to access
-   * @return permit
+   * @return grant
    */
   Grant ask(String userAgent, String path);
 
   /**
    * Gets crawl delay.
    * @return crawl delay in seconds or <code>0</code> if no delay declared
-   * @deprecated 
+   * @deprecated use {@link #ask} to get {@link Grant} from which {@link Grant#getCrawlDelay} might be invoked.
    */
   @Deprecated
   Integer getCrawlDelay();

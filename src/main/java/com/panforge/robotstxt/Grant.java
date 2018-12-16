@@ -42,7 +42,7 @@ public interface Grant {
   
   /**
    * Gets crawl delay from the group.
-   * @return crawl delay or <code>null</code> if no crawl delay defined
+   * @return crawl delay (in seconds) or <code>null</code> if no crawl delay defined
    */
   Integer getCrawlDelay();
 }
