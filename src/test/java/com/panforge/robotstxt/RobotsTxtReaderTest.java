@@ -191,4 +191,14 @@ public class RobotsTxtReaderTest {
     assertTrue("disallowList.size()==1",disallowList.size()==1);
     assertTrue("disallowList contains /root/",disallowList.contains("/root/"));
   }
+  
+  @Test
+  public void testCrawlDelay() throws Exception  {
+    String user_agent = null;
+    Grant grant = bots.ask(user_agent, "/root/data/file.dat");
+    
+    assertNotNull("Grant is null", grant);
+    assertTrue("Access denied", grant.hasAccess());
+    assertNotNull("Crawl delay not found", grant.getCrawlDelay());
+  }
 }

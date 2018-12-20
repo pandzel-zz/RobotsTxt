@@ -1,6 +1,7 @@
 User-agent: *
 Disallow: /root/
 Allow: /root/data/
+Crawl-Delay: 2
 
 User-agent: Banned
 Disallow: /
@@ -13,7 +14,6 @@ Disallow:
 
 User-agent: Superuser
 Allow: /
-Crawl-Delay: 2
 
 User-agent: Wild
 Disallow: /wild*/
