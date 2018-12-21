@@ -181,6 +181,9 @@ class RobotsTxtImpl implements RobotsTxt {
       if (sec != null) {
         selected.addAll(sec.select(userAgent, relativePath, matchingStrategy));
       }
+      if (selected.isEmpty()) {
+        selected.add(new Access(defaultSection,"","",true));
+      }
       return selected;
     } else {
       return Collections.EMPTY_LIST;
