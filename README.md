@@ -19,7 +19,7 @@ Using in your own project:
     <dependency>
         <groupId>com.panforge</groupId>
         <artifactId>robots</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
     </dependency>
   ...
   </dependencies>
@@ -45,6 +45,9 @@ try (InputStream robotsTxtStream = new URL("https://github.com/robots.txt").open
   RobotsTxt robotsTxt = RobotsTxt.read(robotsTxtStream);
 }
 ```
+
+> Please, note that the code snippet above is just an example meant how to feed parser with the stream of data. It is highly recommended
+to use a roboust a HTTP client implementation (like [Apache Commons HTTP Client](https://hc.apache.org/httpcomponents-client-ga/)) for better handling various aspects of HTTP protocol communication instead of rudimentary Java URL() class. 
 
 * Check if robotsTxt allows for access to the resource:
 
