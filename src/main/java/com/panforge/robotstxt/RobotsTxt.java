@@ -40,7 +40,9 @@ public interface RobotsTxt {
    * @param path path to access
    * @return grant
    */
-  Grant ask(String userAgent, String path);
+  default Grant ask(String userAgent, String path) {
+    return null;
+  }
 
   /**
    * Gets crawl delay.
