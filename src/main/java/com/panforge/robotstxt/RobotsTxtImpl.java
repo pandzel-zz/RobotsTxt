@@ -98,14 +98,15 @@ class RobotsTxtImpl implements RobotsTxt {
 
   @Override
   public boolean query(String userAgent, String path) {
-    Grant permit = ask(userAgent, path);
-    return permit != null ? permit.hasAccess() : true;
+    Grant grant = ask(userAgent, path);
+    return grant.hasAccess();
   }
 
   @Override
   public Grant ask(String userAgent, String path) {
     List<Access> select = select(userAgent, path).stream().collect(Collectors.toList());
-    return winningStrategy.selectWinner(select);
+    Access winner = winningStrategy.selectWinner(select);
+    return winner!=null? winner: createDefaultAccess();
   }
 
   /**
@@ -182,7 +183,7 @@ class RobotsTxtImpl implements RobotsTxt {
         selected.addAll(sec.select(userAgent, relativePath, matchingStrategy));
       }
       if (selected.isEmpty()) {
-        selected.add(new Access(defaultSection,"","",true));
+        selected.add(createDefaultAccess());
       }
       return selected;
     } else {
@@ -210,5 +211,9 @@ class RobotsTxtImpl implements RobotsTxt {
     } catch (Exception ex) {
       return path;
     }
+  }
+  
+  private Access createDefaultAccess() {
+    return new Access(defaultSection,"","",true);
   }
 }

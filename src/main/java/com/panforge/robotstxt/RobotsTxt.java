@@ -17,6 +17,7 @@ package com.panforge.robotstxt;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,10 +39,30 @@ public interface RobotsTxt {
    * Asks for grant.
    * @param userAgent user agent to be used evaluate authorization
    * @param path path to access
-   * @return grant
+   * @return grant (never <code>null</code>)
    */
   default Grant ask(String userAgent, String path) {
-    return null;
+    return new Grant() {
+      @Override
+      public boolean hasAccess() {
+        return true;
+      }
+
+      @Override
+      public String getClause() {
+        return "";
+      }
+
+      @Override
+      public List<String> getUserAgents() {
+        return Collections.EMPTY_LIST;
+      }
+
+      @Override
+      public Integer getCrawlDelay() {
+        return null;
+      }
+    };
   }
 
   /**
