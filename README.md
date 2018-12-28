@@ -19,7 +19,7 @@ Using in your own project:
     <dependency>
         <groupId>com.panforge</groupId>
         <artifactId>robots</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
     </dependency>
   ...
   </dependencies>
