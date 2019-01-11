@@ -110,8 +110,8 @@ public interface RobotsTxt {
   /**
    * Reads robots.txt available at the URL using provided strategies.
    * @param input stream of content
-   * @param matchingStrategy
-   * @param winningStrategy
+   * @param matchingStrategy matching strategy
+   * @param winningStrategy winning strategy
    * @return parsed robots.txt object
    * @throws IOException if unable to read content.
    */
