@@ -1,0 +1,7 @@
+# Pues aquí el típico user-agent abierto pá tol mundo.
+User-agent: *
+
+
+# The following rules create havoc while doing regex match, which result in https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+Allow: **********.css
+Allow: **********.js

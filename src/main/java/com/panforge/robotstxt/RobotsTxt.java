@@ -15,6 +15,8 @@
  */
 package com.panforge.robotstxt;
 
+import com.panforge.robotstxt.exception.QueryExecutionException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -32,16 +34,18 @@ public interface RobotsTxt {
    * @param userAgent user agent to be used evaluate authorization
    * @param path path to access
    * @return <code>true</code> if there is an access to the requested path
+   * @throws QueryExecutionException on failure to execute query
    */
-  boolean query(String userAgent, String path);
+  boolean query(String userAgent, String path) throws QueryExecutionException;
   
   /**
    * Asks for grant.
    * @param userAgent user agent to be used evaluate authorization
    * @param path path to access
    * @return grant (never <code>null</code>)
+   * @throws QueryExecutionException on failure to execute query
    */
-  default Grant ask(String userAgent, String path) {
+  default Grant ask(String userAgent, String path) throws QueryExecutionException{
     return new Grant() {
       @Override
       public boolean hasAccess() {
@@ -102,4 +106,18 @@ public interface RobotsTxt {
       RobotsTxtReader reader = new RobotsTxtReader();
       return reader.readRobotsTxt(input);
   }
+
+  /**
+   * Reads robots.txt available at the URL using provided strategies.
+   * @param input stream of content
+   * @param matchingStrategy
+   * @param winningStrategy
+   * @return parsed robots.txt object
+   * @throws IOException if unable to read content.
+   */
+  static RobotsTxt read(InputStream input, MatchingStrategy matchingStrategy, WinningStrategy winningStrategy) throws IOException {
+    RobotsTxtReader reader = new RobotsTxtReader(matchingStrategy, winningStrategy);
+    return reader.readRobotsTxt(input);
+  }
+
 }

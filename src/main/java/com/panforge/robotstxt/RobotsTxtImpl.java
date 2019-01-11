@@ -15,6 +15,9 @@
  */
 package com.panforge.robotstxt;
 
+import com.panforge.robotstxt.exception.QueryExecutionException;
+import com.panforge.robotstxt.exception.SelectionException;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
@@ -42,7 +45,7 @@ class RobotsTxtImpl implements RobotsTxt {
   /**
    * Creates instance of the RobotsTxt implementation
    *
-   * @param userAgent user agent
+   * @param matchingStrategy matchingStrategy
    * @param winningStrategy winning strategy
    */
   public RobotsTxtImpl(MatchingStrategy matchingStrategy, WinningStrategy winningStrategy) {
@@ -97,14 +100,19 @@ class RobotsTxtImpl implements RobotsTxt {
   }
 
   @Override
-  public boolean query(String userAgent, String path) {
+  public boolean query(String userAgent, String path) throws QueryExecutionException {
     Grant grant = ask(userAgent, path);
     return grant.hasAccess();
   }
 
   @Override
-  public Grant ask(String userAgent, String path) {
-    List<Access> select = select(userAgent, path).stream().collect(Collectors.toList());
+  public Grant ask(String userAgent, String path) throws QueryExecutionException {
+    List<Access> select = null;
+    try {
+      select = select(userAgent, path).stream().collect(Collectors.toList());
+    } catch (SelectionException e) {
+      throw new QueryExecutionException("Failed to check access path: " + path, e);
+    }
     Access winner = winningStrategy.selectWinner(select);
     return winner!=null? winner: createDefaultAccess();
   }
@@ -172,7 +180,7 @@ class RobotsTxtImpl implements RobotsTxt {
     return null;
   }
 
-  private List<Access> select(String userAgent, String path) {
+  private List<Access> select(String userAgent, String path) throws SelectionException {
     String relativePath = assureRelative(path);
 
     if (relativePath != null && !"/robots.txt".equalsIgnoreCase(relativePath)) {
