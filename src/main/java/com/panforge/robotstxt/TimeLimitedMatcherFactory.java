@@ -1,4 +1,4 @@
-package com.panforge.robotstxt.matching;
+package com.panforge.robotstxt;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * throw if in use after their timeout.
  * @author : Credit goes to https://www.exratione.com/2017/06/preventing-unbounded-regular-expression-operations-in-java/
  */
-public abstract class TimeLimitedMatcherFactory {
+abstract class TimeLimitedMatcherFactory {
     // If a regular expression requires more than a couple of seconds
     // to complete, then it has no place in polite society.
     private static final long DEFAULT_TIMEOUT_MS = 2000L;

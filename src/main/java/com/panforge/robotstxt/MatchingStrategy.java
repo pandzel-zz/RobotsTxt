@@ -15,8 +15,6 @@
  */
 package com.panforge.robotstxt;
 
-import com.panforge.robotstxt.exception.MatchingTimeoutException;
-import com.panforge.robotstxt.matching.TimeLimitedMatcherFactory;
 
 import static com.panforge.robotstxt.URLDecoder.decode;
 import static com.panforge.robotstxt.WildcardsCompiler.compile;
@@ -35,9 +33,8 @@ interface MatchingStrategy {
    * @param pattern pattern
    * @param pathToTest path to test
    * @return <code>true</code> if match
-   * @throws MatchingTimeoutException if unable to match within specific time frame.
    */
-  boolean matches(String pattern, String pathToTest) throws MatchingTimeoutException;
+  boolean matches(String pattern, String pathToTest);
   
   /**
    * This strategy recognizes (*) and ($) as wildcards.
@@ -47,11 +44,6 @@ interface MatchingStrategy {
     if (pattern==null || pattern.isEmpty()) return true;
     
     String relativePath = decode(pathToTest);
-    /*
-    if (pattern.endsWith("/") && !relativePath.endsWith("/")) {
-      relativePath += "/";
-    }
-    */
     Pattern pt = compile(pattern);
     Matcher matcher = pt.matcher(relativePath);
     return matcher.find() && matcher.start()==0;
@@ -72,22 +64,17 @@ interface MatchingStrategy {
     }
 
     @Override
-    public boolean matches(String pattern, String pathToTest) throws MatchingTimeoutException {
+    public boolean matches(String pattern, String pathToTest) {
       if (pathToTest == null) return false;
       if (pattern == null || pattern.isEmpty()) return true;
 
       String relativePath = decode(pathToTest);
-    /*
-    if (pattern.endsWith("/") && !relativePath.endsWith("/")) {
-      relativePath += "/";
-    }
-    */
       try {
         Pattern pt = compile(pattern);
         Matcher timeBoundMatcher = TimeLimitedMatcherFactory.matcher(pt, relativePath, timeoutMs);
         return timeBoundMatcher.find() && timeBoundMatcher.start() == 0;
       } catch (TimeLimitedMatcherFactory.RegExpTimeoutException e) {
-        throw new MatchingTimeoutException(timeoutMs);
+        return false;
       }
     }
   }

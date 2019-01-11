@@ -15,8 +15,6 @@
  */
 package com.panforge.robotstxt;
 
-import com.panforge.robotstxt.exception.QueryExecutionException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -34,18 +32,16 @@ public interface RobotsTxt {
    * @param userAgent user agent to be used evaluate authorization
    * @param path path to access
    * @return <code>true</code> if there is an access to the requested path
-   * @throws QueryExecutionException on failure to execute query
    */
-  boolean query(String userAgent, String path) throws QueryExecutionException;
+  boolean query(String userAgent, String path);
   
   /**
    * Asks for grant.
    * @param userAgent user agent to be used evaluate authorization
    * @param path path to access
    * @return grant (never <code>null</code>)
-   * @throws QueryExecutionException on failure to execute query
    */
-  default Grant ask(String userAgent, String path) throws QueryExecutionException{
+  default Grant ask(String userAgent, String path) {
     return new Grant() {
       @Override
       public boolean hasAccess() {
