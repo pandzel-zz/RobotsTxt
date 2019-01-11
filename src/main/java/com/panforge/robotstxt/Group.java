@@ -15,6 +15,8 @@
  */
 package com.panforge.robotstxt;
 
+import com.panforge.robotstxt.exception.SelectionException;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -93,12 +95,13 @@ class Group {
    * @param relativePath path to test
    * @param matchingStrategy matcher
    * @return list of matching elements
+   * @throws SelectionException if unable to select
    */
-  public List<Access> select(String userAgent, String relativaPath, MatchingStrategy matchingStrategy) {
-    if ((userAgent==null && !isAnyAgent()) || relativaPath==null || !matchUserAgent(userAgent)) {
+  public List<Access> select(String userAgent, String relativePath, MatchingStrategy matchingStrategy) throws SelectionException {
+    if ((userAgent==null && !isAnyAgent()) || relativePath==null || !matchUserAgent(userAgent)) {
       return Collections.EMPTY_LIST;
     }
-    return accessList.select(relativaPath, matchingStrategy).stream().collect(Collectors.toList());
+    return accessList.select(relativePath, matchingStrategy).stream().collect(Collectors.toList());
   }
   
   /**

@@ -15,6 +15,9 @@
  */
 package com.panforge.robotstxt;
 
+import com.panforge.robotstxt.exception.MatchingTimeoutException;
+import com.panforge.robotstxt.matching.TimeLimitedMatcherFactory;
+
 import static com.panforge.robotstxt.URLDecoder.decode;
 import static com.panforge.robotstxt.WildcardsCompiler.compile;
 import java.util.regex.Matcher;
@@ -32,8 +35,9 @@ interface MatchingStrategy {
    * @param pattern pattern
    * @param pathToTest path to test
    * @return <code>true</code> if match
+   * @throws MatchingTimeoutException if unable to match within specific time frame.
    */
-  boolean matches(String pattern, String pathToTest);
+  boolean matches(String pattern, String pathToTest) throws MatchingTimeoutException;
   
   /**
    * This strategy recognizes (*) and ($) as wildcards.
@@ -52,4 +56,39 @@ interface MatchingStrategy {
     Matcher matcher = pt.matcher(relativePath);
     return matcher.find() && matcher.start()==0;
   };
+
+  /**
+   * To protect against Regular Expression Denial of Service.
+   * you may use TimeBoundMatchingStrategy.
+   * https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+   * @author vishnu rao
+   */
+  class TimeBoundMatchingStrategy implements MatchingStrategy {
+
+    private final int timeoutMs;
+
+    public TimeBoundMatchingStrategy(int timeOutMs) {
+      this.timeoutMs = timeOutMs;
+    }
+
+    @Override
+    public boolean matches(String pattern, String pathToTest) throws MatchingTimeoutException {
+      if (pathToTest == null) return false;
+      if (pattern == null || pattern.isEmpty()) return true;
+
+      String relativePath = decode(pathToTest);
+    /*
+    if (pattern.endsWith("/") && !relativePath.endsWith("/")) {
+      relativePath += "/";
+    }
+    */
+      try {
+        Pattern pt = compile(pattern);
+        Matcher timeBoundMatcher = TimeLimitedMatcherFactory.matcher(pt, relativePath, timeoutMs);
+        return timeBoundMatcher.find() && timeBoundMatcher.start() == 0;
+      } catch (TimeLimitedMatcherFactory.RegExpTimeoutException e) {
+        throw new MatchingTimeoutException(timeoutMs);
+      }
+    }
+  }
 }
