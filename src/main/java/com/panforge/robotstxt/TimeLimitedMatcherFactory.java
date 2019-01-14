@@ -1,4 +1,4 @@
-package com.panforge.robotstxt.matching;
+package com.panforge.robotstxt;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 /**
  * A factory class used to generate Matcher instances that will
  * throw if in use after their timeout.
- * @Author : Credit goes to https://www.exratione.com/2017/06/preventing-unbounded-regular-expression-operations-in-java/
+ * @author : Credit goes to https://www.exratione.com/2017/06/preventing-unbounded-regular-expression-operations-in-java/
  */
-public abstract class TimeLimitedMatcherFactory {
+abstract class TimeLimitedMatcherFactory {
     // If a regular expression requires more than a couple of seconds
     // to complete, then it has no place in polite society.
     private static final long DEFAULT_TIMEOUT_MS = 2000L;
@@ -22,6 +22,7 @@ public abstract class TimeLimitedMatcherFactory {
      * @param pattern               The Pattern instance.
      * @param charSequence          The CharSequence to operate on.
      * @param timeoutInMilliseconds Throw after this timeout is reached.
+     * @return a matcher
      */
     public static Matcher matcher(
             Pattern pattern,
@@ -49,6 +50,7 @@ public abstract class TimeLimitedMatcherFactory {
      *
      * @param pattern      The Pattern instance.
      * @param charSequence The CharSequence to operate on.
+     * @return a matcher
      */
     public static Matcher matcher(
             Pattern pattern,

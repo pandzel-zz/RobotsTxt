@@ -15,7 +15,6 @@
  */
 package com.panforge.robotstxt;
 
-import com.panforge.robotstxt.exception.MatchingTimeoutException;
 
 import java.util.List;
 
@@ -67,9 +66,8 @@ class Access implements Grant {
    * @param path path to check
    * @param matchingStrategy matcher
    * @return <code>true</code> if path matches access path
-   * @throws MatchingTimeoutException on failure to match within specific time period.
    */
-  public boolean matches(String path, MatchingStrategy matchingStrategy) throws MatchingTimeoutException {
+  public boolean matches(String path, MatchingStrategy matchingStrategy) {
     return path!=null && matchingStrategy.matches(clause, path);
   }
   
