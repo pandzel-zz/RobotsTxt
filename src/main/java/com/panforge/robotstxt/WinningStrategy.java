@@ -23,7 +23,7 @@ import java.util.List;
  * Determines how a winner will be selected.
  * @see MatchingStrategy
  */
-interface WinningStrategy {
+public interface WinningStrategy {
   
   /**
    * Selects a single winner amongst the candidates.

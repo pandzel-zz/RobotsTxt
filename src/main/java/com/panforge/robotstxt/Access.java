@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Access.
  */
-class Access implements Grant {
+public class Access implements Grant {
   private final Group group;
   private final String source;
   private final String clause;

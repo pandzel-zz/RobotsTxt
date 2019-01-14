@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * It determines how and if path is matching a pattern.
  * @see WinningStrategy
  */
-interface MatchingStrategy {
+public interface MatchingStrategy {
   /**
    * Matches given path with a pattern.
    * @param pattern pattern
@@ -74,6 +74,8 @@ interface MatchingStrategy {
         Matcher timeBoundMatcher = TimeLimitedMatcherFactory.matcher(pt, relativePath, timeoutMs);
         return timeBoundMatcher.find() && timeBoundMatcher.start() == 0;
       } catch (TimeLimitedMatcherFactory.RegExpTimeoutException e) {
+        //todo: use logger for now print
+        System.err.println("MatchingStrategy timed out using " + pattern + " for " + pathToTest);
         return false;
       }
     }
