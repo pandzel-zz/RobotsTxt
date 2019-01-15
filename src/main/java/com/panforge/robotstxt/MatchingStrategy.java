@@ -52,6 +52,9 @@ interface MatchingStrategy {
     String relativePath = decode(pathToTest);
     try {
       Pattern pt = compile(pattern);
+      // Protection against Regular Expression Denial of Service.
+      // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+      // @author vishnu rao
       Matcher timeBoundMatcher = TimeLimitedMatcherFactory.matcher(pt, relativePath);
       return timeBoundMatcher.find() && timeBoundMatcher.start() == 0;
     } catch (TimeLimitedMatcherFactory.RegExpTimeoutException e) {
