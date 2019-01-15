@@ -209,7 +209,7 @@ public class RobotsTxtReaderTest {
   public void testTimeoutWhileCheckingAccess() throws Exception {
     RobotsTxt robot;
     try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("robots_with_suspicious_rule.txt")) {
-      RobotsTxtReader reader = new RobotsTxtReader(new MatchingStrategy.TimeBoundMatchingStrategy(2000), WinningStrategy.DEFAULT);
+      RobotsTxtReader reader = new RobotsTxtReader(MatchingStrategy.DEFAULT, WinningStrategy.DEFAULT);
       robot = reader.readRobotsTxt(inputStream);
     }
 
@@ -224,7 +224,7 @@ public class RobotsTxtReaderTest {
   public void testTimeoutWhileCheckingAccessWithGoodRules() throws Exception {
     RobotsTxt robot;
     try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("robots.txt")) {
-      RobotsTxtReader reader = new RobotsTxtReader(new MatchingStrategy.TimeBoundMatchingStrategy(2000), WinningStrategy.DEFAULT);
+      RobotsTxtReader reader = new RobotsTxtReader(MatchingStrategy.DEFAULT, WinningStrategy.DEFAULT);
       robot = reader.readRobotsTxt(inputStream);
     }
 
