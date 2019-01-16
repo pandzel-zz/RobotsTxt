@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 /**
  * Robots.txt group of directives.
  */
-public class Group {
+class Group {
   private final List<String> userAgents = new ArrayList<>();
   private final AccessList accessList = new AccessList();
   private boolean anyAgent;
@@ -93,6 +93,7 @@ public class Group {
    * @param relativePath path to test
    * @param matchingStrategy matcher
    * @return list of matching elements
+   * @throws SelectionException if unable to select
    */
   public List<Access> select(String userAgent, String relativePath, MatchingStrategy matchingStrategy) {
     if ((userAgent==null && !isAnyAgent()) || relativePath==null || !matchUserAgent(userAgent)) {
