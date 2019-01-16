@@ -102,18 +102,4 @@ public interface RobotsTxt {
       RobotsTxtReader reader = new RobotsTxtReader();
       return reader.readRobotsTxt(input);
   }
-
-  /**
-   * Reads robots.txt available at the URL using provided strategies.
-   * @param input stream of content
-   * @param matchingStrategy matching strategy
-   * @param winningStrategy winning strategy
-   * @return parsed robots.txt object
-   * @throws IOException if unable to read content.
-   */
-  static RobotsTxt read(InputStream input, MatchingStrategy matchingStrategy, WinningStrategy winningStrategy) throws IOException {
-    RobotsTxtReader reader = new RobotsTxtReader(matchingStrategy, winningStrategy);
-    return reader.readRobotsTxt(input);
-  }
-
 }

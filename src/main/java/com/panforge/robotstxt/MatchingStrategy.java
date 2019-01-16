@@ -15,7 +15,6 @@
  */
 package com.panforge.robotstxt;
 
-
 import static com.panforge.robotstxt.URLDecoder.decode;
 import static com.panforge.robotstxt.WildcardsCompiler.compile;
 import java.util.regex.Matcher;
@@ -25,57 +24,41 @@ import java.util.regex.Pattern;
  * Matching strategy.
  * <p>
  * It determines how and if path is matching a pattern.
+ *
  * @see WinningStrategy
  */
 interface MatchingStrategy {
+
   /**
    * Matches given path with a pattern.
+   *
    * @param pattern pattern
    * @param pathToTest path to test
    * @return <code>true</code> if match
    */
   boolean matches(String pattern, String pathToTest);
-  
+
   /**
    * This strategy recognizes (*) and ($) as wildcards.
    */
-  MatchingStrategy DEFAULT = (pattern,pathToTest)->{
-    if (pathToTest==null) return false;
-    if (pattern==null || pattern.isEmpty()) return true;
-    
+  MatchingStrategy DEFAULT = (pattern, pathToTest) -> {
+    if (pathToTest == null) {
+      return false;
+    }
+    if (pattern == null || pattern.isEmpty()) {
+      return true;
+    }
+
     String relativePath = decode(pathToTest);
-    Pattern pt = compile(pattern);
-    Matcher matcher = pt.matcher(relativePath);
-    return matcher.find() && matcher.start()==0;
+    try {
+      Pattern pt = compile(pattern);
+      // Protection against Regular Expression Denial of Service.
+      // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+      // @author vishnu rao
+      Matcher timeBoundMatcher = TimeLimitedMatcherFactory.matcher(pt, relativePath);
+      return timeBoundMatcher.find() && timeBoundMatcher.start() == 0;
+    } catch (TimeLimitedMatcherFactory.RegExpTimeoutException e) {
+      return false;
+    }
   };
-
-  /**
-   * To protect against Regular Expression Denial of Service.
-   * you may use TimeBoundMatchingStrategy.
-   * https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
-   * @author vishnu rao
-   */
-  class TimeBoundMatchingStrategy implements MatchingStrategy {
-
-    private final int timeoutMs;
-
-    public TimeBoundMatchingStrategy(int timeOutMs) {
-      this.timeoutMs = timeOutMs;
-    }
-
-    @Override
-    public boolean matches(String pattern, String pathToTest) {
-      if (pathToTest == null) return false;
-      if (pattern == null || pattern.isEmpty()) return true;
-
-      String relativePath = decode(pathToTest);
-      try {
-        Pattern pt = compile(pattern);
-        Matcher timeBoundMatcher = TimeLimitedMatcherFactory.matcher(pt, relativePath, timeoutMs);
-        return timeBoundMatcher.find() && timeBoundMatcher.start() == 0;
-      } catch (TimeLimitedMatcherFactory.RegExpTimeoutException e) {
-        return false;
-      }
-    }
-  }
 }
