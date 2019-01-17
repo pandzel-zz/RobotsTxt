@@ -2,6 +2,7 @@ package com.panforge.robotstxt;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * A factory class used to generate Matcher instances that will
@@ -12,6 +13,11 @@ abstract class TimeLimitedMatcherFactory {
     // If a regular expression requires more than a couple of seconds
     // to complete, then it has no place in polite society.
     private static final long DEFAULT_TIMEOUT_MS = 2000L;
+    private static final long timeoutMs;
+    
+    static {
+      timeoutMs = NumberUtils.toLong(System.getProperty("com.panforge.robotstxt.timeout"), DEFAULT_TIMEOUT_MS);
+    }
 
     /**
      * Generate a Matcher instance that will throw if used or still
@@ -56,7 +62,7 @@ abstract class TimeLimitedMatcherFactory {
             Pattern pattern,
             CharSequence charSequence
     ) {
-        return matcher(pattern, charSequence, DEFAULT_TIMEOUT_MS);
+        return matcher(pattern, charSequence, timeoutMs);
     }
 
     /**
