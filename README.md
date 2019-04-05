@@ -2,7 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.panforge/robots.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.panforge%22%20AND%20a:%22robots%22)
 
 # RobotsTxt
-Java library to read, parse and query robots.txt file.
+Java library to read, parse and query [robots.txt](http://www.robotstxt.org/orig.html) file.
 
 ## Instructions
 
