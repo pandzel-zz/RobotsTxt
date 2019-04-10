@@ -2,7 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.panforge/robots.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.panforge%22%20AND%20a:%22robots%22)
 
 # RobotsTxt
-Java library to read, parse and query robots.txt file.
+Java library to read, parse and query [robots.txt](http://www.robotstxt.org/orig.html) file.
 
 ## Instructions
 
@@ -20,7 +20,7 @@ Using in your own project:
     <dependency>
         <groupId>com.panforge</groupId>
         <artifactId>robots</artifactId>
-        <version>1.3.1</version>
+        <version>1.4.0</version>
     </dependency>
   ...
   </dependencies>
