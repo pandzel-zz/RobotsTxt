@@ -16,6 +16,7 @@
 package com.panforge.robotstxt;
 
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,12 +54,12 @@ class Access implements Grant {
 
   @Override
   public Integer getCrawlDelay() {
-    return group.getCrawlDelay();
+    return group!=null? group.getCrawlDelay(): null;
   }
 
   @Override
   public List<String> getUserAgents() {
-    return group.getUserAgents();
+    return group!=null? group.getUserAgents(): Collections.emptyList();
   }
   
   /**
