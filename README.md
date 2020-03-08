@@ -78,7 +78,7 @@ if (grant != null && grant.getCrawlDelay()!=null) {
 
 ## Requirements
 
-* Java JDK 1.8 or higher
+* Java JDK 11 or higher
 
 ## Licensing
 Copyright 2016 Piotr Andzel
