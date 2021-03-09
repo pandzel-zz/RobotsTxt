@@ -20,7 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import org.apache.commons.lang3.StringUtils;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Robots.txt reader.
@@ -56,7 +56,7 @@ class RobotsTxtReader {
    * @throws IOException if reading stream fails
    */
   public RobotsTxt readRobotsTxt(InputStream inputStream) throws IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
     Group currentGroup = null;
     boolean startGroup = false;
     RobotsTxtImpl robots = new RobotsTxtImpl(matchingStrategy, winningStrategy);
@@ -101,7 +101,6 @@ class RobotsTxtReader {
               startGroup = false;
             } catch (NumberFormatException ex) {
             }
-          } else {
           }
           break;
 
@@ -169,7 +168,7 @@ class RobotsTxtReader {
       return null;
     }
 
-    String rest = line.substring(colonIndex + 1, line.length());
+    String rest = line.substring(colonIndex + 1);
     int hashIndex = rest.indexOf("#");
 
     String value = StringUtils.trimToEmpty(hashIndex >= 0 ? rest.substring(0, hashIndex) : rest);

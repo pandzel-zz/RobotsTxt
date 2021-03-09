@@ -93,7 +93,6 @@ class Group {
    * @param relativePath path to test
    * @param matchingStrategy matcher
    * @return list of matching elements
-   * @throws SelectionException if unable to select
    */
   public List<Access> select(String userAgent, String relativePath, MatchingStrategy matchingStrategy) {
     if ((userAgent==null && !isAnyAgent()) || relativePath==null || !matchUserAgent(userAgent)) {
@@ -109,7 +108,7 @@ class Group {
    */
   public boolean matchUserAgent(String userAgent) {
     if (anyAgent) return true;
-    if (!anyAgent && userAgent==null) return false;
+    if (userAgent == null) return false;
     return userAgents.stream().anyMatch(agent->agent.equalsIgnoreCase(userAgent));
   }
 

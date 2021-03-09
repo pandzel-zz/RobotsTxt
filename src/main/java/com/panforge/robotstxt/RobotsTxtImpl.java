@@ -91,7 +91,7 @@ class RobotsTxtImpl implements RobotsTxt {
     return sec != null
             ? sec.getAccessList().listAll().stream()
                     .filter(acc -> !acc.hasAccess())
-                    .map(acc -> acc.getClause())
+                    .map(Access::getClause)
                     .collect(Collectors.toList())
             : Collections.emptyList();
   }
@@ -104,8 +104,7 @@ class RobotsTxtImpl implements RobotsTxt {
 
   @Override
   public Grant ask(String userAgent, String path) {
-    List<Access> select = null;
-    select = select(userAgent, path).stream().collect(Collectors.toList());
+    List<Access> select = select(userAgent, path).stream().collect(Collectors.toList());
     Access winner = winningStrategy.selectWinner(select);
     return winner!=null? winner: createDefaultAccess();
   }
@@ -143,9 +142,7 @@ class RobotsTxtImpl implements RobotsTxt {
       pw.println(defaultSection);
     }
 
-    groups.forEach(group -> {
-      pw.println(group);
-    });
+    groups.forEach(pw::println);
 
     if (host != null) {
       pw.format("Host: %s", host).println();
