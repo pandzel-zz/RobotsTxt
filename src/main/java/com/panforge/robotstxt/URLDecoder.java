@@ -15,6 +15,8 @@
  */
 package com.panforge.robotstxt;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * URL decoder for robots.
  */
@@ -29,10 +31,10 @@ class URLDecoder {
       try {
         StringBuilder sb = new StringBuilder();
         for (int idx = str.toLowerCase().indexOf("%2f"); idx>=0; idx = str.toLowerCase().indexOf("%2f")) {
-          sb.append(java.net.URLDecoder.decode(str.substring(0, idx),"UTF-8")).append(str.substring(idx, idx+3));
+          sb.append(java.net.URLDecoder.decode(str.substring(0, idx), StandardCharsets.UTF_8)).append(str, idx, idx+3);
           str = str.substring(idx+3);
         }
-        sb.append(java.net.URLDecoder.decode(str,"UTF-8"));
+        sb.append(java.net.URLDecoder.decode(str, StandardCharsets.UTF_8));
         str = sb.toString();
       } catch (Exception ex) {
       }

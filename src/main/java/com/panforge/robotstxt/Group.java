@@ -108,7 +108,7 @@ class Group {
    */
   public boolean matchUserAgent(String userAgent) {
     if (anyAgent) return true;
-    if (!anyAgent && userAgent==null) return false;
+    if (userAgent == null) return false;
     return userAgents.stream().anyMatch(agent->agent.equalsIgnoreCase(userAgent));
   }
 
