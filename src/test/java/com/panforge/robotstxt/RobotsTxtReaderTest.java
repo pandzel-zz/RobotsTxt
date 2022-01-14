@@ -111,6 +111,7 @@ public class RobotsTxtReaderTest {
     assertFalse("/fishheads", bots.query(user_agent, "/fishheads"));
     assertFalse("/fishheads/yummy.html", bots.query(user_agent, "/fishheads/yummy.html"));
     assertFalse("/fish.php?id=anything", bots.query(user_agent, "/fish.php?id=anything"));
+    assertFalse("/fish.xml", bots.query(user_agent, "/fish.xml"));
 
     assertTrue("/Fish.asp", bots.query(user_agent, "/Fish.asp"));
     assertTrue("/catfish", bots.query(user_agent, "/catfish"));
@@ -127,6 +128,7 @@ public class RobotsTxtReaderTest {
     assertFalse("/fishheads", bots.query(user_agent, "/fishheads"));
     assertFalse("/fishheads/yummy.html", bots.query(user_agent, "/fishheads/yummy.html"));
     assertFalse("/fish.php?id=anything", bots.query(user_agent, "/fish.php?id=anything"));
+    assertFalse("/fish.xml", bots.query(user_agent, "/fish.xml"));
 
     assertTrue("/Fish.asp", bots.query(user_agent, "/Fish.asp"));
     assertTrue("/catfish", bots.query(user_agent, "/catfish"));
@@ -141,6 +143,7 @@ public class RobotsTxtReaderTest {
     assertFalse("/fish/?id=anything", bots.query(user_agent, "/fish/?id=anything"));
     assertFalse("/fish/salmon.html", bots.query(user_agent, "/fish/salmon.html"));
 
+    assertTrue("/fish.xml", bots.query(user_agent, "/fish.xml"));
     assertTrue("/fish", bots.query(user_agent, "/fish"));
     assertTrue("/fish", bots.query(user_agent, "/fish.html"));
     assertTrue("/?id=fish", bots.query(user_agent, "/?id=fish"));
@@ -155,7 +158,8 @@ public class RobotsTxtReaderTest {
     assertFalse("/folder/filename.php?parameter", bots.query(user_agent, "/folder/filename.php?parameter"));
     assertFalse("/folder/any.php.file.html", bots.query(user_agent, "/folder/any.php.file.html"));
     assertFalse("/folder/any.php.file.html/filename.php", bots.query(user_agent, "/folder/any.php.file.html/filename.php"));
-    
+
+    assertTrue("/fish.xml", bots.query(user_agent, "/fish.xml"));
     assertTrue("/windows.PHP", bots.query(user_agent, "/windows.PHP"));
   }
 
@@ -165,7 +169,8 @@ public class RobotsTxtReaderTest {
     
     assertFalse("/filename.php", bots.query(user_agent, "/filename.php"));
     assertFalse("/folder/filename.php", bots.query(user_agent, "/folder/filename.php"));
-    
+
+    assertTrue("/fish.xml", bots.query(user_agent, "/fish.xml"));
     assertTrue("/filename.php?parameter", bots.query(user_agent, "/filename.php?parameter"));
     assertTrue("/filename.php/", bots.query(user_agent, "/filename.php/"));
     assertTrue("/folder/filename.php?parameter", bots.query(user_agent, "/folder/filename.php?parameter"));
@@ -180,10 +185,20 @@ public class RobotsTxtReaderTest {
     
     assertFalse("/fish.php", bots.query(user_agent, "/fish.php"));
     assertFalse("/fishheads/catfish.php?parameters", bots.query(user_agent, "/fishheads/catfish.php?parameters"));
-    
+
+    assertTrue("/fish.xml", bots.query(user_agent, "/fish.xml"));
     assertTrue("/Fish.PHP", bots.query(user_agent, "/Fish.PHP"));
   }
-  
+
+  @Test
+  public void testGooBot() throws Exception {
+    String user_agent = "Goo-bot";
+
+    assertFalse("/fish.xml", bots.query(user_agent, "/fish.xml"));
+
+    assertTrue("/fish.html", bots.query(user_agent, "/fish.html"));
+  }
+
   @Test
   public void testGetDisallowList() throws Exception {
     String user_agent = null;
