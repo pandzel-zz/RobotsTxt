@@ -190,12 +190,34 @@ class RobotsTxtImpl implements RobotsTxt {
   }
 
   private Group findSectionByAgent(List<Group> sections, String userAgent, Group defaultGroup) {
+    List<Group> candidateGroups = getCandidateGroupsByAgent(sections, userAgent);
+
+    if (candidateGroups.isEmpty()) {
+      return defaultGroup;
+    }
+
+    return findBestMatchingSectionByAgent(candidateGroups, userAgent);
+  }
+
+  private List<Group> getCandidateGroupsByAgent(List<Group> sections, String userAgent) {
+    return sections.stream()
+        .filter(sec -> sec.matchUserAgent(userAgent))
+        .collect(Collectors.toList());
+  }
+
+  private Group findBestMatchingSectionByAgent(List<Group> sections, String userAgent) {
+    int longestMatch = 0;
+    Group bestMatch = null;
     for (Group sec : sections) {
-      if (sec.matchUserAgent(userAgent)) {
-        return sec;
+      for (String agent : sec.getUserAgents()) {
+        int matchLength = StringUtils.greatestCommonPrefix(userAgent, agent).length();
+        if (matchLength > longestMatch) {
+          longestMatch = matchLength;
+          bestMatch = sec;
+        }
       }
     }
-    return defaultGroup;
+    return bestMatch;
   }
 
   private String assureRelative(String path) {

@@ -25,4 +25,20 @@ class StringUtils {
         String s = trimToEmpty(text);
         return s.isEmpty() ? null : s;
     }
+
+    /**
+     * Find the longest common prefix between {@code a} and {@code b} strings.
+     * @param a - text to compare
+     * @param b - text to compare with
+     * @return longest common prefix
+     */
+    public static String greatestCommonPrefix(String a, String b) {
+        int minLength = Math.min(a.length(), b.length());
+        for (int i = 0; i < minLength; i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                return a.substring(0, i);
+            }
+        }
+        return a.substring(0, minLength);
+    }
 }

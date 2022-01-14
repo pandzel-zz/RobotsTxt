@@ -20,6 +20,9 @@ Disallow: /wild*/
 Allow: /wildest/
 Disallow: /*.gif$
 
+User-agent: Goo
+Disallow: /fish.xml
+
 User-agent: Goo1
 Disallow: /fish
 
