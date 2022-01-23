@@ -90,7 +90,7 @@
               <goal>sign</goal>
             </goals>
             <configuration>
-              <executable>gpg2</executable>
+              <executable>gpg</executable>
             </configuration>
           </execution>
         </executions>
